@@ -59,7 +59,7 @@
           <div class="note-body">
             <p class="text">{{ n.content }}</p>
             <div class="images" v-if="n.images && n.images.length">
-              <img v-for="p in n.images" :key="p" :src="signedUrlMap[p] || ''" />
+              <img v-for="p in n.images" :key="p" :src="signedUrlMap[p] || ''" @click="openPreview(signedUrlMap[p] || '')" />
             </div>
           </div>
         </article>
@@ -110,6 +110,10 @@
         </div>
       </div>
     </div>
+    <div class="preview" v-if="previewOpen" @click.self="closePreview">
+      <img :src="previewUrl" />
+      <button class="preview-close" @click="closePreview">关闭</button>
+    </div>
   </div>
 </template>
 
@@ -148,6 +152,18 @@ const files = ref([])
 const fileInput = ref(null)
 const notes = ref([])
 const signedUrlMap = ref({})
+const previewOpen = ref(false)
+const previewUrl = ref('')
+
+function openPreview(url) {
+  previewUrl.value = url || ''
+  previewOpen.value = !!previewUrl.value
+}
+
+function closePreview() {
+  previewOpen.value = false
+  previewUrl.value = ''
+}
 const blue6 = ['#e6f0ff', '#cfe3ff', '#a9ceff', '#7fb2ff', '#3d8aff', '#1677ff']
 const orange6 = ['#fff2e6', '#ffd9b3', '#ffbf80', '#ffa64d', '#ff9933', '#ff8c00']
 const purple6 = ['#f0eaff', '#e0d1ff', '#c2a8ff', '#a27dff', '#9559f2', '#8a2be2']
@@ -566,6 +582,9 @@ textarea { background: #f8f8f8; }
 .text { white-space: pre-wrap; }
 .images { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-top: 8px; }
 .images img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; }
+.preview { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.preview img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.3); }
+.preview-close { position: fixed; right: 16px; top: 16px; background: rgba(255,255,255,0.9); color: #333; border: none; border-radius: 20px; padding: 8px 12px; z-index: 1001; }
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
 .dialog { background: #fff; width: 600px; max-width: 90%; border: 1px solid #ddd; border-radius: 8px; padding: 12px; }
 .dialog .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
