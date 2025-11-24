@@ -35,13 +35,13 @@
         <textarea class="input" v-model="form.content" placeholder="" />
         <div class="toolbar">
           <input ref="fileInput" type="file" multiple accept="image/*" @change="onFiles" />
-          <span>类型：</span>
+          <span>类型:</span>
           <select v-model="form.type">
             <option value="sleep">睡眠</option>
             <option value="exercise">运动</option>
             <option value="meditation">冥想</option>
           </select>
-          <span>评分：</span>
+          <span>评分:</span>
           <input class="score" type="number" min="0" max="5" v-model.number="form.score" />          
           <button class="save" :class="{ active: (form.content || '').trim().length > 0 }" @click="save">保存</button>
         </div>
@@ -73,13 +73,13 @@
           <textarea v-model="editForm.content" class="input"></textarea>
         </div>
         <div class="row">
-          <span>类型：</span>
+          <span>类型:</span>
           <select v-model="editForm.type">
             <option value="sleep">睡眠</option>
             <option value="exercise">运动</option>
             <option value="meditation">冥想</option>
           </select>
-          <span>评分：</span>
+          <span>评分:</span>
           <input class="score" type="number" min="0" max="5" v-model.number="editForm.score" />
         </div>
         <div class="row">
