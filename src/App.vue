@@ -204,7 +204,7 @@ async function loadNotes(opts) {
     .from('notes')
     .select('id,title,content,images,type,score,created_at,is_private,user_id,entry_date')
     .is('deleted_at', null)
-    .order('created_at', { ascending: false })
+    .order('entry_date', { ascending: false })
   if (user.value?.id) q = q.eq('user_id', user.value.id)
   const startParam = opts?.start
   const endParam = opts?.end
