@@ -35,7 +35,7 @@
         <textarea class="input" v-model="form.content" placeholder="" />
         <div class="toolbar">
           <input ref="fileInput" type="file" multiple accept="image/*" @change="onFiles" />
-          <el-radio-group v-model="form.type">
+          <el-radio-group class="compact-radio" v-model="form.type">
             <el-radio label="sleep">睡眠</el-radio>
             <el-radio label="exercise">运动</el-radio>
             <el-radio label="meditation">冥想</el-radio>
@@ -71,7 +71,7 @@
           <textarea v-model="editForm.content" class="input"></textarea>
         </div>
         <div class="row">
-          <el-radio-group v-model="editForm.type">
+          <el-radio-group class="compact-radio" v-model="editForm.type">
             <el-radio label="sleep">睡眠</el-radio>
             <el-radio label="exercise">运动</el-radio>
             <el-radio label="meditation">冥想</el-radio>
@@ -589,6 +589,8 @@ textarea { background: #f8f8f8; }
 .img-wrap { position: relative; }
 .img-wrap img { width: 120px; height: 120px; object-fit: cover; border-radius: 6px; }
 .img-remove { position: absolute; right: 4px; top: 4px; background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 4px; padding: 2px 6px; }
+.compact-radio .el-radio { margin-right: 8px; }
+.compact-radio .el-radio:last-child { margin-right: 0; }
 @media (max-width: 768px) {
   .page { grid-template-columns: 1fr; }
   .sidebar { border-right: none; border-bottom: 1px solid #e0dfda; height: auto; }
