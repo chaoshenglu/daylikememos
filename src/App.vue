@@ -49,7 +49,7 @@
       <section class="list" v-if="user">
         <article v-for="n in filteredNotes" :key="n.id" class="note">
           <header class="note-header">
-            <span>{{ formatHeader(n.created_at) }}</span>
+            <span>{{ formatHeader(n.entry_date, n.created_at) }}</span>
             <span class="actions" role="button" @click.stop="toggleMenu(n.id)">⋮</span>
           </header>
           <div class="menu" v-if="openMenuId===n.id" @click.stop>
@@ -188,14 +188,15 @@ function weekdayZh(d) {
   return map[w]
 }
 
-function formatHeader(ts) {
-  const d = new Date(ts)
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  const hh = String(d.getHours()).padStart(2, '0')
-  const mm = String(d.getMinutes()).padStart(2, '0')
-  return `${y}-${m}-${day} ${hh}:${mm} ${weekdayZh(d)}`
+function formatHeader(entryDate, createdAt) {
+  const dateObj = ymdToDate(entryDate) || new Date(createdAt)
+  const timeObj = new Date(createdAt)
+  const y = dateObj.getFullYear()
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0')
+  const day = String(dateObj.getDate()).padStart(2, '0')
+  const hh = String(timeObj.getHours()).padStart(2, '0')
+  const mm = String(timeObj.getMinutes()).padStart(2, '0')
+  return `${y}-${m}-${day} ${hh}:${mm} ${weekdayZh(dateObj)}`
 }
 
 async function loadNotes(opts) {
