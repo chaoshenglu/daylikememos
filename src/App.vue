@@ -34,16 +34,7 @@
       <section class="editor" v-if="user">
         <textarea class="input" v-model="form.content" placeholder="" />
         <div class="toolbar">
-          <el-upload
-            ref="uploadRef"
-            :auto-upload="false"
-            multiple
-            accept="image/*"
-            :on-change="onUploadChange"
-            :show-file-list="false"
-          >
-            <el-button type="primary" size="small">选择图片</el-button>
-          </el-upload>
+          <input ref="fileInput" type="file" multiple accept="image/*" @change="onFiles" />
           <span>类型:</span>
           <select v-model="form.type">
             <option value="sleep">睡眠</option>
@@ -158,7 +149,7 @@ const form = ref({
 })
 
 const files = ref([])
-const uploadRef = ref(null)
+const fileInput = ref(null)
 const notes = ref([])
 const signedUrlMap = ref({})
 const previewOpen = ref(false)
@@ -274,8 +265,9 @@ function onDidMove(pages) {
   loadNotes({ start, end })
 }
 
-function onUploadChange(_file, fileList) {
-  files.value = (fileList || []).map(f => f.raw).filter(Boolean)
+function onFiles(ev) {
+  const input = ev.target
+  files.value = Array.from(input?.files || [])
 }
 
 async function uploadImagesForDate() {
@@ -336,7 +328,7 @@ async function save() {
     form.value.content = ''
     form.value.score = 5
     files.value = []
-    if (uploadRef.value) uploadRef.value.clearFiles()
+    if (fileInput.value) fileInput.value.value = ''
     await loadNotes()
   } catch (e) {
     const msg = (e && e.message) ? e.message : '保存失败'
@@ -486,7 +478,7 @@ function labelForDateStr(s) {
   const y = d.getFullYear()
   const m = String(d.getMonth() + 1).padStart(2, '0')
   const day = String(d.getDate()).padStart(2, '0')
-  return `${y}—${m}—${day} ${weekdayZh(d)}`
+  return `${y}-${m}-${day} ${weekdayZh(d)}`
 }
 
 async function ensureProfile() {
