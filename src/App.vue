@@ -468,6 +468,7 @@ onMounted(async () => {
 
 function clearFilter() {
   filterDate.value = null
+  loadNotes()
 }
 
 function labelForDateStr(s) {
