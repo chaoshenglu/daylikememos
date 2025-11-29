@@ -40,7 +40,7 @@
             <el-radio label="exercise">运动</el-radio>
             <el-radio label="meditation">冥想</el-radio>
           </el-radio-group>
-          <input class="score" type="number" min="0" max="5" v-model.number="form.score" />          
+          <el-rate v-model="form.score" :max="5" />          
           <button class="save" :class="{ active: (form.content || '').trim().length > 0 }" @click="save">保存</button>
         </div>
       </section>
@@ -76,7 +76,7 @@
             <el-radio label="exercise">运动</el-radio>
             <el-radio label="meditation">冥想</el-radio>
           </el-radio-group>
-          <input class="score" type="number" min="0" max="5" v-model.number="editForm.score" />
+          <el-rate v-model="editForm.score" :max="5" />
         </div>
         <div class="row">
           <div class="images" v-if="editForm.images && editForm.images.length">
