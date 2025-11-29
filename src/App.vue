@@ -35,10 +35,14 @@
         <textarea class="input" v-model="form.content" placeholder="" />
         <div class="toolbar">
           <input ref="fileInput" type="file" multiple accept="image/*" @change="onFiles" />
-          <el-radio-group class="compact-radio" v-model="form.type">
-            <el-radio label="sleep">睡眠</el-radio>
-            <el-radio label="exercise">运动</el-radio>
-            <el-radio label="meditation">冥想</el-radio>
+          <el-radio-group
+            class="compact-radio"
+            v-model="form.type"
+            :fill="typeColor(form.type)"
+          >
+            <el-radio-button label="sleep">睡眠</el-radio-button>
+            <el-radio-button label="exercise">运动</el-radio-button>
+            <el-radio-button label="meditation">冥想</el-radio-button>
           </el-radio-group>
           <el-rate v-model="form.score" :max="5" />          
           <button class="save" :class="{ active: (form.content || '').trim().length > 0 }" @click="save">保存</button>
@@ -71,10 +75,14 @@
           <textarea v-model="editForm.content" class="input"></textarea>
         </div>
         <div class="row">
-          <el-radio-group class="compact-radio" v-model="editForm.type">
-            <el-radio label="sleep">睡眠</el-radio>
-            <el-radio label="exercise">运动</el-radio>
-            <el-radio label="meditation">冥想</el-radio>
+          <el-radio-group
+            class="compact-radio"
+            v-model="editForm.type"
+            :fill="typeColor(editForm.type)"
+          >
+            <el-radio-button label="sleep">睡眠</el-radio-button>
+            <el-radio-button label="exercise">运动</el-radio-button>
+            <el-radio-button label="meditation">冥想</el-radio-button>
           </el-radio-group>
           <el-rate v-model="editForm.score" :max="5" />
         </div>
@@ -163,6 +171,13 @@ function closePreview() {
 const blue6 = ['#e6f0ff', '#cfe3ff', '#a9ceff', '#7fb2ff', '#3d8aff', '#1677ff']
 const orange6 = ['#fff2e6', '#ffd9b3', '#ffbf80', '#ffa64d', '#ff9933', '#ff8c00']
 const purple6 = ['#f0eaff', '#e0d1ff', '#c2a8ff', '#a27dff', '#9559f2', '#8a2be2']
+
+function typeColor(t) {
+  if (t === 'sleep') return '#1677ff'
+  if (t === 'exercise') return '#ff8c00'
+  if (t === 'meditation') return '#8a2be2'
+  return '#1677ff'
+}
 
 function ymd(d) {
   const y = d.getFullYear()
